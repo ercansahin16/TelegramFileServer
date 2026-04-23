@@ -81,6 +81,26 @@ class WebServerManager:
             # Initialize FastAPI app
             self._web_app = await _web_server(self._bot_manager)
 
+            # ⭐ CORS MIDDLEWARE EKLE - Buraya dikkat!
+            from fastapi.middleware.cors import CORSMiddleware
+            
+            # Frontend URL'niz - Render'daki adresiniz
+            FRONTEND_URLS = [
+                "https://fileserverapp-4d5j.onrender.com",
+                "https://*.onrender.com",
+                "http://localhost:8080",
+                "http://localhost:5173",
+            ]
+            
+            self._web_app.add_middleware(
+                CORSMiddleware,
+                allow_origins=FRONTEND_URLS + ["*"],  # "*" herkese açar, test için
+                allow_credentials=True,
+                allow_methods=["*"],
+                allow_headers=["*"],
+            )
+            logger.info(f"CORS middleware added with origins: {FRONTEND_URLS}")
+
             # Configure Uvicorn server with custom logging (programmatic launch)
             config = uvicorn.Config(
                 self._web_app,
