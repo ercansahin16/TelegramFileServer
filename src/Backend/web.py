@@ -87,9 +87,20 @@ app.add_middleware(
     domain="localhost"     # Explicitly set domain for localhost development
 )
 
+# ⭐ CORS MIDDLEWARE - GÜNCELLENMİŞ HALİ ⭐
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080", "http://127.0.0.1:8080", "http://localhost:8000", "http://127.0.0.1:8000", "http://localhost:8081", "tauri://localhost", "http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:8080", 
+        "http://127.0.0.1:8080", 
+        "http://localhost:8000", 
+        "http://127.0.0.1:8000", 
+        "http://localhost:8081", 
+        "tauri://localhost", 
+        "http://localhost:5173",
+        "https://fileserverapp-4d5j.onrender.com",  # ⭐ FRONTEND URL'N
+        "https://*.onrender.com"                     # ⭐ TÜM onrender.com ALANLARI
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
